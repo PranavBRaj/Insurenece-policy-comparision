@@ -1,0 +1,89 @@
+Based on the frontend code, here's a complete walkthrough of the UI:
+
+---
+
+## Page 1 — Home Page (`/`)
+
+**Hero Section** at the top:
+- A badge: `✨ AI-Powered Analysis`
+- Large headline: *"Compare Insurance Policies — Instantly & Intelligently"*
+- 3 stat pills: **3 Sections Analyzed · AI Powered Engine · 100% Accurate Comparison**
+
+**Upload Card** below it:
+- Two drag-and-drop zones side by side with a **VS** divider between them
+- Each zone shows: `📂 Drag & drop or click to browse` / `TXT only · max 5 MB`
+- Once a file is dropped, it shows the filename + size + a `✕` remove button
+- A **Compare Policies** button (disabled until both files are selected)
+- A progress bar appears while uploading/processing
+
+**How It Works** section — 3 steps in a row:
+> 1. 📤 Upload Documents → 2. 🔍 AI Extraction → 3. 📊 Side-by-side View
+
+**Feature Highlights** — 4 colored cards:
+> 🛡️ Coverage Analysis · 🚫 Exclusions Mapping · 💰 Cost Breakdown · 📂 History Tracking
+
+---
+
+## Page 2 — Comparison Page (`/comparison/:id`)
+
+**Top bar**: breadcrumb `← New Comparison / Comparison #5`, a status badge (green `completed`), timestamp, and a **⬇ Download PDF** button.
+
+### Section A — Comparison View
+- **Policy name headers**: `[Policy 1] filename.txt` ←→ **VS** ←→ `[Policy 2] filename.txt`
+- **Summary Banner**: stat cards showing shared coverage count, unique items, exclusions count, advantages for each policy
+
+**3 tabs** below:
+| Tab | Content |
+|---|---|
+| 🛡️ Coverage | Table of shared items (both policies side by side) + lists of items unique to each |
+| 🚫 Exclusions | Same layout for exclusions |
+| 💰 Premiums | Side-by-side table: annual premium, monthly, deductible, copay, coinsurance, OOP max + plain-text differences |
+
+### Section B — Anomaly Detection 🔍
+- A **Run Scan** button
+- After scan: severity filter pills (`All · Critical · Warning · Info`)
+- Each anomaly card shows: severity icon (🚨⚠️ℹ️), affected policy badge, category icon, title, description, recommendation, detected by `Rule` or `AI` tag
+
+### Section C — Interactive Charts 📊
+- **Coverage Grouped Bar** — Policy 1 vs Policy 2 across Shared/Exclusive Coverage/Exclusions
+- **Coverage Donut** — Shared vs Only P1 vs Only P2
+- **Exclusions Donut** — same breakdown for exclusions
+- **Premium Bar** — side-by-side dollar comparison of all premium fields
+- **Similarity Histogram** — distribution of similarity scores among matched items
+
+### Section D — Q&A Chatbot 💬
+- Header: *"Ask About This Comparison"*
+- 4 suggested question buttons to start: *"Which policy has better coverage overall?"* etc.
+- Chat interface: user messages (right-aligned bubbles) + AI responses (left-aligned) with a **confidence badge** (High/Medium/Low) and **relevant section tags** (🛡️ coverage, 💰 premiums, etc.)
+- Text input + **Send** button at the bottom
+
+### Section E — Policy Recommendation 🎯
+- A form with dropdowns: Age group, Budget preference, Primary health concern, Risk tolerance
+- **Get Recommendation** button
+- Result: a winner card with 🏆 icon, recommended policy name, confidence level, reasoning paragraph, key factors list, caveats
+- Below: 4 expandable cards for standard profiles: *Young Single Professional, Family with Children, Senior/Retired, Chronic Condition Management*
+
+### Section F — Plain-English Summary 📖
+- Two expandable **policy cards** (one per policy) each showing:
+  - One-liner description
+  - ✅ What it covers / 🚫 What it doesn't / 💰 How much it costs
+  - 👍 Biggest Strength + 👎 Biggest Weakness
+- A **Comparison Panel** below with: executive summary, key difference, head-to-head winner badge (🏆 or 🤝)
+
+---
+
+## Page 3 — History Page (`/history`)
+
+- Header: **Comparison History** + `+ New Comparison` button
+- A table with columns: `# · Policy 1 · Policy 2 · Status · Date · Actions`
+- Status shown as colored badges: green `completed`, red `failed`, yellow `processing`
+- Each row has a **View** button (links to comparison page) and a **Delete** button
+
+---
+
+## Global UI Elements
+
+- **Dark-themed** design with a navy/dark surface palette
+- **Header**: `📋 PolicyLens` brand name + nav links `⚡ Compare` and `📂 History`
+- **Footer**: `PolicyLens — Insurance Policy Comparator © 2026`
+- Consistent card/component styling with subtle borders and hover effects
