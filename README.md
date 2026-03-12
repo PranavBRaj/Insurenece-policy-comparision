@@ -236,3 +236,5 @@ npm run build
 - **Scanned/image PDFs** – PDFs containing only scanned images (no embedded text) cannot be parsed without OCR. The API returns a descriptive error in this case.
 - **Non-standard layouts** – Policies with unusual formatting may have reduced extraction accuracy. The keyword-scan fallback provides basic results for these cases.
 - **Language** – English-language policies only (regex patterns are English-specific).
+#   I n s u r e n e c e - p o l i c y - c o m p a r i s i o n  
+ 
