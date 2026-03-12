@@ -1,17 +1,39 @@
-# Insurance Policy Comparator
+# PolicyLens — Insurance Policy Comparator
 
-A full-stack web application that compares two insurance policy PDF documents side-by-side, highlighting coverage, exclusions, and premium differences.
+An AI-powered full-stack web application that lets users upload two insurance 
+policy documents (.txt) and instantly receive a comprehensive, structured 
+side-by-side comparison of coverage, exclusions, and premiums.
+
+---
+
+## Features
+
+| Feature | Description |
+|---|---|
+| **AI Text Extraction** | Groq LLaMA-3.3-70B extracts structured coverage, exclusions, and premium data from raw policy text |
+| **Side-by-Side Comparison** | Shared items, Policy 1-only items, and Policy 2-only items across coverage and exclusions sections |
+| **Premium Breakdown** | Annual/monthly premiums, deductibles, copays, coinsurance, and out-of-pocket maximums compared |
+| **Interactive Charts** | Coverage grouped bar, coverage donut, exclusions donut, premium bar, and similarity histogram (Chart.js) |
+| **Anomaly Detection** | Rule-based + LLM hybrid scan against industry benchmarks (deductibles, OOP caps, missing coverages, high-risk exclusions) |
+| **Policy Q&A Chatbot** | Ask any natural language question about the comparison and get an AI-sourced answer with confidence rating |
+| **Personalised Recommendations** | Input your age, budget, health concerns, and risk tolerance to receive a tailored policy recommendation for 4 demographic profiles |
+| **Plain-English Summary** | Jargon-free, Grade 6 reading level summary of both policies with strengths, weaknesses, and a head-to-head verdict |
+| **PDF Export** | Download a formatted multi-section PDF comparison report via ReportLab |
+| **Comparison History** | All comparisons persisted in MySQL and accessible from a dedicated History page |
+| **Health Check** | `/health` endpoint reports server and database status |
 
 ---
 
 ## Tech Stack
 
-| Layer    | Technology                            |
-|----------|---------------------------------------|
-| Backend  | Python 3.11+ · FastAPI · SQLAlchemy   |
-| Frontend | React 18 · Vite 5 · React Router 6   |
-| Database | MySQL 8                               |
-| PDF      | pdfplumber · pypdf                    |
+| Layer | Technology |
+|---|---|
+| **Backend** | Python 3.11 · FastAPI · SQLAlchemy 2 · PyMySQL |
+| **AI Engine** | Groq API · LLaMA-3.3-70B-Versatile |
+| **Frontend** | React 18 · Vite 5 · React Router 6 · Chart.js |
+| **Database** | MySQL 8 |
+| **PDF Generation** | ReportLab |
+| **Auth / Config** | Pydantic Settings · python-dotenv |
 
 ---
 
@@ -236,5 +258,3 @@ npm run build
 - **Scanned/image PDFs** – PDFs containing only scanned images (no embedded text) cannot be parsed without OCR. The API returns a descriptive error in this case.
 - **Non-standard layouts** – Policies with unusual formatting may have reduced extraction accuracy. The keyword-scan fallback provides basic results for these cases.
 - **Language** – English-language policies only (regex patterns are English-specific).
-#   I n s u r e n e c e - p o l i c y - c o m p a r i s i o n  
- 
