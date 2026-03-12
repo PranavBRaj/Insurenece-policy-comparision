@@ -1,17 +1,39 @@
-# Insurance Policy Comparator
+# PolicyLens — Insurance Policy Comparator
 
-A full-stack web application that compares two insurance policy PDF documents side-by-side, highlighting coverage, exclusions, and premium differences.
+An AI-powered full-stack web application that lets users upload two insurance 
+policy documents (.txt) and instantly receive a comprehensive, structured 
+side-by-side comparison of coverage, exclusions, and premiums.
+
+---
+
+## Features
+
+| Feature | Description |
+|---|---|
+| **AI Text Extraction** | Groq LLaMA-3.3-70B extracts structured coverage, exclusions, and premium data from raw policy text |
+| **Side-by-Side Comparison** | Shared items, Policy 1-only items, and Policy 2-only items across coverage and exclusions sections |
+| **Premium Breakdown** | Annual/monthly premiums, deductibles, copays, coinsurance, and out-of-pocket maximums compared |
+| **Interactive Charts** | Coverage grouped bar, coverage donut, exclusions donut, premium bar, and similarity histogram (Chart.js) |
+| **Anomaly Detection** | Rule-based + LLM hybrid scan against industry benchmarks (deductibles, OOP caps, missing coverages, high-risk exclusions) |
+| **Policy Q&A Chatbot** | Ask any natural language question about the comparison and get an AI-sourced answer with confidence rating |
+| **Personalised Recommendations** | Input your age, budget, health concerns, and risk tolerance to receive a tailored policy recommendation for 4 demographic profiles |
+| **Plain-English Summary** | Jargon-free, Grade 6 reading level summary of both policies with strengths, weaknesses, and a head-to-head verdict |
+| **PDF Export** | Download a formatted multi-section PDF comparison report via ReportLab |
+| **Comparison History** | All comparisons persisted in MySQL and accessible from a dedicated History page |
+| **Health Check** | `/health` endpoint reports server and database status |
 
 ---
 
 ## Tech Stack
 
-| Layer    | Technology                            |
-|----------|---------------------------------------|
-| Backend  | Python 3.11+ · FastAPI · SQLAlchemy   |
-| Frontend | React 18 · Vite 5 · React Router 6   |
-| Database | MySQL 8                               |
-| PDF      | pdfplumber · pypdf                    |
+| Layer | Technology |
+|---|---|
+| **Backend** | Python 3.11 · FastAPI · SQLAlchemy 2 · PyMySQL |
+| **AI Engine** | Groq API · LLaMA-3.3-70B-Versatile |
+| **Frontend** | React 18 · Vite 5 · React Router 6 · Chart.js |
+| **Database** | MySQL 8 |
+| **PDF Generation** | ReportLab |
+| **Auth / Config** | Pydantic Settings · python-dotenv |
 
 ---
 
@@ -21,44 +43,50 @@ A full-stack web application that compares two insurance policy PDF documents si
 Genai_2/
 ├── backend/
 │   ├── app/
-│   │   ├── main.py               # FastAPI application entry-point
-│   │   ├── config.py             # Settings (reads .env)
-│   │   ├── database.py           # SQLAlchemy engine + session
+│   │   ├── main.py                    # FastAPI entry-point, CORS, startup
+│   │   ├── config.py                  # Settings from .env via pydantic-settings
+│   │   ├── database.py                # SQLAlchemy engine + session factory
 │   │   ├── models/
-│   │   │   ├── db_models.py      # ORM models (Policy, Comparison, UploadSession)
-│   │   │   └── schemas.py        # Pydantic request/response schemas
+│   │   │   ├── db_models.py           # ORM: Policy, Comparison, UploadSession
+│   │   │   └── schemas.py             # Pydantic request/response schemas
 │   │   ├── routes/
-│   │   │   ├── upload.py         # POST /api/upload-compare
-│   │   │   └── comparison.py     # GET/DELETE /api/comparisons, GET /api/history
+│   │   │   ├── upload.py              # POST /api/upload-compare
+│   │   │   └── comparison.py          # GET/DELETE comparisons, Q&A, export, etc.
 │   │   └── services/
-│   │       ├── pdf_parser.py     # PDF text extraction & structured parsing
-│   │       └── comparison_engine.py  # Policy diff / matching logic
-│   ├── uploads/                  # Uploaded PDFs (created at runtime)
+│   │       ├── text_parser.py         # Groq-powered .txt policy extraction
+│   │       ├── comparison_engine.py   # Groq-powered side-by-side comparison
+│   │       ├── qa_engine.py           # Natural language Q&A over comparison data
+│   │       ├── recommendation_engine.py # Personalised policy recommendations
+│   │       ├── anomaly_engine.py      # Rule + LLM anomaly detection
+│   │       ├── plain_summary_engine.py # Plain-English consumer summaries
+│   │       ├── visualisation_engine.py # Chart-ready data (no external API calls)
+│   │       └── pdf_exporter.py        # ReportLab PDF report generation
+│   ├── uploads/                       # Uploaded files (auto-created at runtime)
 │   ├── requirements.txt
 │   └── .env.example
 ├── frontend/
 │   ├── src/
-│   │   ├── App.jsx               # Router + header
-│   │   ├── index.css             # Global design tokens & utilities
+│   │   ├── App.jsx                    # Router + header (PolicyLens brand)
 │   │   ├── pages/
-│   │   │   ├── HomePage.jsx      # Upload form
-│   │   │   ├── ComparisonPage.jsx  # Results view
-│   │   │   └── HistoryPage.jsx   # Past comparisons
+│   │   │   ├── HomePage.jsx           # Upload form + feature highlights
+│   │   │   ├── ComparisonPage.jsx     # Full results page (all sections)
+│   │   │   └── HistoryPage.jsx        # Past comparisons table
 │   │   ├── components/
-│   │   │   ├── FileUploader.jsx  # Drag-and-drop PDF upload UI
-│   │   │   ├── ComparisonView.jsx
-│   │   │   ├── CoverageSection.jsx
-│   │   │   ├── ExclusionsSection.jsx
-│   │   │   ├── PremiumSection.jsx
-│   │   │   ├── SectionTable.jsx  # Reusable shared/unique diff table
-│   │   │   └── SummaryBanner.jsx # High-level statistics
+│   │   │   ├── ComparisonView.jsx     # Tabbed Coverage / Exclusions / Premiums
+│   │   │   ├── SummaryBanner.jsx      # High-level statistics banner
+│   │   │   ├── PolicyCharts.jsx       # Chart.js visualisations
+│   │   │   ├── PolicyQA.jsx           # Chat-style Q&A interface
+│   │   │   ├── PolicyRecommendation.jsx # Profile-based recommendation form
+│   │   │   ├── PolicyAnomalies.jsx    # Anomaly detection panel
+│   │   │   └── PolicyPlainSummary.jsx # Plain-English summary panel
 │   │   └── services/
-│   │       └── api.js            # Axios API client
+│   │       └── api.js                 # Axios API client
 │   ├── package.json
 │   ├── vite.config.js
 │   └── index.html
 ├── database/
-│   └── schema.sql                # Manual DB initialisation script
+│   └── schema.sql                     # MySQL schema initialisation script
+├── sample_policies/                   # Sample .txt policy files for testing
 └── README.md
 ```
 
@@ -69,6 +97,7 @@ Genai_2/
 - **Python 3.11+** — [python.org](https://www.python.org/)
 - **Node.js 18+** — [nodejs.org](https://nodejs.org/)
 - **MySQL 8** — running locally or remotely
+- **Groq API Key** — [console.groq.com](https://console.groq.com)
 
 ---
 
@@ -102,13 +131,14 @@ source venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Copy the example env file and fill in your MySQL credentials
+# Copy the example env file and fill in your credentials
 copy .env.example .env      # Windows
 # cp .env.example .env       # macOS/Linux
 
 # Edit .env – set at minimum:
-#   DATABASE_URL=mysql+pymysql://root:<password>@localhost:3306/insurance_compare
+#   DATABASE_URL=mysql+pymysql://root:<password>@localhost/your_db
 #   SECRET_KEY=<any-long-random-string>
+#   GROQ_API_KEY=<your-groq-api-key>
 
 # Start the API server (hot reload)
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
@@ -137,20 +167,26 @@ Open **http://localhost:5173** in your browser.
 
 ## API Reference
 
-| Method | Endpoint                         | Description                                   |
-|--------|----------------------------------|-----------------------------------------------|
-| POST   | `/api/upload-compare`            | Upload two PDFs, parse & compare them         |
-| GET    | `/api/comparisons`               | List all comparisons (paginated)              |
-| GET    | `/api/comparisons/{id}`          | Get a specific comparison result              |
-| DELETE | `/api/comparisons/{id}`          | Delete a comparison and its policies          |
-| GET    | `/api/history`                   | Upload session history                        |
-| GET    | `/health`                        | Health check (includes DB connectivity)       |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/upload-compare` | Upload two `.txt` policy files; parse + compare |
+| `GET` | `/api/comparisons` | List all comparisons (paginated) |
+| `GET` | `/api/comparisons/{id}` | Get a specific comparison result |
+| `DELETE` | `/api/comparisons/{id}` | Delete a comparison and its policies |
+| `GET` | `/api/comparisons/{id}/visualisation` | Chart-ready visualisation data |
+| `GET` | `/api/comparisons/{id}/export.pdf` | Download formatted PDF report |
+| `POST` | `/api/comparisons/{id}/ask` | Ask a natural language question |
+| `POST` | `/api/comparisons/{id}/recommendations` | Get personalised recommendations |
+| `GET` | `/api/comparisons/{id}/anomalies` | Run anomaly detection scan |
+| `GET` | `/api/comparisons/{id}/plain-summary` | Get plain-English summary |
+| `GET` | `/api/history` | Upload session history |
+| `GET` | `/health` | Health check (DB status) |
 
 ### POST `/api/upload-compare`
 
 **Request:** `multipart/form-data` with fields:
-- `policy1` – first PDF file
-- `policy2` – second PDF file
+- `policy1` – first `.txt` policy file (max 5 MB)
+- `policy2` – second `.txt` policy file (max 5 MB)
 
 **Response:**
 ```json
@@ -181,32 +217,37 @@ Open **http://localhost:5173** in your browser.
 
 ---
 
-## Comparison Logic
+## How It Works
 
-### PDF Parsing (`pdf_parser.py`)
+### 1. Text Extraction (`text_parser.py`)
+Plain-text `.txt` policy files are read and sent to the Groq LLaMA model, which extracts structured coverage items, exclusion items, and premium info as JSON.
 
-1. **Text extraction** – primary: `pdfplumber` (preserves layout, handles tables); fallback: `pypdf`
-2. **Section detection** – regex patterns match common insurance section headers (`Coverage`, `Exclusions`, `Premium`, etc.)
-3. **Item extraction** – bullet/numbered list items are parsed first; lines with relevant keywords are used as fallback
-4. **Amount extraction** – dollar values (`$x,xxx.xx`), percentages, deductibles, co-pays, and co-insurance are extracted via targeted regex
+### 2. Comparison Engine (`comparison_engine.py`)
+Both parsed policies are sent together to Groq, which performs an intelligent side-by-side comparison — classifying items as shared or unique to each policy and computing similarity scores.
 
-### Comparison Engine (`comparison_engine.py`)
+### 3. Downstream Analysis
+All further features (anomaly detection, Q&A, recommendations, plain summary) use the stored comparison JSON as context for targeted Groq prompts — no re-parsing required.
 
-- Items are compared using **`difflib.SequenceMatcher`** on normalised text (lower-case, punctuation stripped)
-- A similarity threshold of **0.55** classifies items as "shared" vs "unique"
-- Premiums are compared field-by-field and differences are listed as plain-text sentences
+### 4. Visualisation (`visualisation_engine.py`)
+Chart datasets are derived purely from the comparison JSON — no additional API calls.
 
 ---
 
-## Environment Variables (`.env`)
+## Environment Variables
 
-| Variable            | Default                                             | Description                             |
-|---------------------|-----------------------------------------------------|-----------------------------------------|
-| `DATABASE_URL`      | `mysql+pymysql://root:password@localhost:3306/...`  | SQLAlchemy connection string            |
-| `SECRET_KEY`        | `change-me`                                         | Used for internal signing (extend as needed) |
-| `UPLOAD_DIR`        | `uploads`                                           | Directory for uploaded PDFs             |
-| `MAX_FILE_SIZE_MB`  | `20`                                                | Per-file upload size limit in MB        |
-| `CORS_ORIGINS`      | `http://localhost:5173,http://127.0.0.1:5173`       | Allowed CORS origins (comma-separated)  |
+| Variable | Description |
+|---|---|
+| `DATABASE_URL` | SQLAlchemy connection string (MySQL) |
+| `SECRET_KEY` | Internal signing key |
+| `GROQ_API_KEY` | Your Groq API key |
+| `GROQ_MODEL` | Groq model name (default: `llama-3.3-70b-versatile`) |
+| `UPLOAD_DIR` | Directory for uploaded files (default: `uploads`) |
+| `MAX_FILE_SIZE_MB` | Per-file upload size limit (default: `5`) |
+| `CORS_ORIGINS` | Allowed CORS origins as JSON array |
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | Optional: path or JSON for Google Sheets export |
+| `GOOGLE_SHEETS_SHARE_EMAIL` | Optional: email to share exported sheets with |
+
+See `backend/.env.example` for a full template.
 
 ---
 
@@ -233,8 +274,7 @@ npm run build
 
 ## Notes & Limitations
 
-- **Scanned/image PDFs** – PDFs containing only scanned images (no embedded text) cannot be parsed without OCR. The API returns a descriptive error in this case.
-- **Non-standard layouts** – Policies with unusual formatting may have reduced extraction accuracy. The keyword-scan fallback provides basic results for these cases.
-- **Language** – English-language policies only (regex patterns are English-specific).
-#   I n s u r e n e c e - p o l i c y - c o m p a r i s i o n  
- 
+- **File format** – Only plain-text `.txt` files are accepted (max 5 MB per file).
+- **Language** – English-language policies only.
+- **Groq rate limits** – Free-tier Groq accounts have daily token quotas; large policy files may hit limits.
+- **Token budget** – Policy text is truncated to ~28,000 characters (~7,000 tokens) for extraction to stay within the model's context window.
