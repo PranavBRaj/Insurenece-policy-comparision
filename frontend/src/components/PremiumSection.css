@@ -1,0 +1,191 @@
+/* PremiumSection.css */
+
+.premium-section {
+  padding: 0;
+  overflow: hidden;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+.premium-section:hover { box-shadow: none; }
+
+.ps-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--clr-border);
+  border-top: 4px solid var(--clr-warning);
+  background: var(--clr-bg);
+}
+
+.ps-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -.01em;
+}
+
+.ps-empty {
+  padding: 48px 24px;
+  color: var(--clr-txt-muted);
+  text-align: center;
+  font-size: .9rem;
+}
+
+/* ── Table ──────────────────────────────────────────── */
+.ps-table-wrap { padding: 20px 24px; overflow-x: auto; }
+
+.ps-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .875rem;
+}
+
+.ps-table th {
+  text-align: left;
+  padding: 9px 14px;
+  background: var(--clr-bg);
+  border-bottom: 2px solid var(--clr-border);
+  font-weight: 700;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--clr-txt-muted);
+}
+
+.ps-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--clr-border);
+  vertical-align: middle;
+  transition: background .12s;
+}
+
+.ps-table tr:last-child td { border-bottom: none; }
+.ps-table tbody tr:hover td { background: #1a1600; }
+
+.ps-table tr.row-differs { background: linear-gradient(90deg, #1a1400, #161100); }
+.ps-table tr.row-differs:hover td { background: #201900; }
+
+.field-label {
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--clr-txt);
+}
+
+.col-p1 { color: var(--clr-policy1); font-weight: 700; }
+.col-p2 { color: var(--clr-policy2); font-weight: 700; }
+
+.premium-val {
+  font-weight: 800;
+  font-size: .95rem;
+}
+
+.na-val {
+  color: var(--clr-txt-light);
+  font-style: italic;
+  font-size: .85rem;
+}
+
+.diff-cell { white-space: nowrap; }
+
+/* ── Additional fees ────────────────────────────────── */
+.additional-fees {
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--clr-border);
+}
+
+.af-label {
+  font-size: .72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--clr-txt-muted);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.af-label::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: var(--clr-border);
+}
+
+.af-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .af-cols { grid-template-columns: 1fr; }
+}
+
+.af-col {
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+.af-p1 { background: linear-gradient(160deg, #1a1400, #0f0d00); border: 1px solid #3d3000; }
+.af-p2 { background: linear-gradient(160deg, #161200, #0a0900); border: 1px solid #2d2600; }
+
+.af-col-header {
+  font-weight: 800;
+  font-size: .72rem;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  padding-bottom: 6px;
+  border-bottom: 1.5px solid;
+}
+.af-p1 .af-col-header { color: var(--clr-policy1); border-color: #3d3000; }
+.af-p2 .af-col-header { color: var(--clr-policy2); border-color: #2d2600; }
+
+.af-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: .85rem;
+}
+.af-list li { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+
+/* ── Differences list ───────────────────────────────── */
+.ps-diffs {
+  padding: 16px 24px 20px;
+  margin: 0 24px 20px;
+  background: linear-gradient(135deg, #1a1400, #161100);
+  border: 1px solid #3d3000;
+  border-radius: var(--radius-md);
+}
+
+.diffs-label {
+  font-weight: 800;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--clr-primary);
+  margin-bottom: 10px;
+}
+
+.diffs-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.diffs-list li {
+  font-size: .875rem;
+  color: #f0d870;
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.5;
+}
+.diffs-list li::before {
+  content: '⚡';
+  position: absolute;
+  left: 0;
+}

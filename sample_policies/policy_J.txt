@@ -1,0 +1,109 @@
+policy_J
+HEALTH INSURANCE POLICY DOCUMENT
+
+Policy Name: Zenith Worldwide Expat Health Plan
+Policy Number: ZWH-2027-992
+Effective Date: July 1, 2027
+Insurer: Zenith Global Assurance
+
+**SECTION 1: COVERAGE BENEFITS**
+
+**1.1 Hospitalization**
+Covers inpatient hospital stays globally, including room and board, nursing services, and general nursing care up to $2,000,000 per policy year.
+Sub-limit: ICU/Critical Care covered up to $500,000 per year.
+
+**1.2 Outpatient Medical Services**
+Covers consultations with general practitioners and specialists worldwide.
+Coverage limit: Up to 30 outpatient visits per year.
+Telehealth consultations: Unlimited and fully covered (100%).
+
+**1.3 Emergency Services**
+Covers emergency room visits and ambulance services globally.
+Emergency room: $0 copay if admitted, $50 if not admitted.
+Medical Evacuation & Repatriation: Fully covered up to $1,000,000 per incident.
+
+**1.4 Surgical Procedures**
+Covers medically necessary surgeries including pre-operative and post-operative care.
+Coverage up to $300,000 per surgical event.
+
+**1.5 Prescription Drugs**
+Covers generic and branded drugs prescribed by a licensed physician globally.
+Annual drug benefit limit: $5,000.
+Generic drugs: 100% reimbursement.
+Branded drugs: 80% reimbursement.
+
+**1.6 Mental Health Services**
+Covers inpatient and outpatient mental health treatment.
+Up to 20 virtual or in-person outpatient therapy sessions per year.
+Inpatient mental health: up to 30 days per year.
+
+**1.7 Maternity and Newborn Care**
+Subject to a 12-month waiting period from the effective date.
+Normal delivery: $10,000.
+Caesarean section: $15,000.
+Newborn care up to 45 days post-birth.
+
+**1.8 Preventive Care**
+Annual global wellness check-up: 1 per year, fully covered (100%).
+Vaccinations, including travel vaccines (e.g., Yellow Fever, Typhoid): fully covered.
+Cancer screening: covered twice per year.
+
+**1.9 Dental Care (Premium & Dental Rider)**
+Basic dental: fillings, extractions, scaling.
+Annual dental limit: $1,200.
+Orthodontics: covered up to $500 lifetime limit.
+
+**1.10 Vision Care (Premium & Dental Rider)**
+Annual eye examination: covered once per year.
+Corrective lenses or frames: $300 per year.
+
+**SECTION 2: EXCLUSIONS AND EXCEPTIONS**
+
+**2.1 Pre-existing Conditions**
+Any illness or condition diagnosed or treated within 24 months before the policy start date is not covered during the first 12 months, unless transferring continuous coverage from another recognized international health plan.
+
+**2.2 Cosmetic Procedures**
+Any surgery or treatment primarily for aesthetic purposes is excluded.
+
+**2.3 Experimental Treatments**
+Treatments not approved by the WHO or relevant national health authority are excluded.
+
+**2.4 Self-inflicted Injuries**
+Injuries or conditions resulting from intentional self-harm or attempted suicide are excluded.
+
+**2.5 Substance Abuse**
+Treatment for alcohol or drug dependency is limited to a 30-day inpatient rehabilitation maximum per lifetime.
+
+**2.6 War and Civil Unrest**
+Covered for passive acts of terrorism. Excluded if the insured travels to a country where a Level 4 "Do Not Travel" advisory is in effect prior to their arrival.
+
+**2.7 Fertility Treatments**
+In vitro fertilization (IVF), artificial insemination, and other assisted reproductive technologies are entirely excluded.
+
+**2.8 Extreme Sports**
+Injuries from hazardous activities (e.g., scuba diving below 20m, base jumping, heli-skiing) are excluded unless the Extreme Sports Rider is purchased.
+
+**SECTION 3: PREMIUMS AND COSTS**
+
+Annual Premium: $5,400.00
+Monthly Premium: $450.00
+Deductible: $500.00 per year
+Co-payment: $20.00 per outpatient visit
+Co-insurance: 20% after deductible is met
+Out-of-Pocket Maximum: $5,000.00 per year
+Additional Fees:
+Policy administration fee: $25.00
+Premium & Dental Rider: $60.00 per month
+
+**SECTION 4: NETWORK**
+
+This policy operates on an open-access global network.
+The insured may visit any licensed medical practitioner or facility worldwide.
+Direct billing is available within the Zenith Prime Provider Network.
+Out-of-network claims (outside the direct billing network) are reimbursed at 80% of the customary and reasonable amount for that specific country.
+
+**SECTION 5: CLAIMS**
+
+Claims must be submitted via the global portal within 90 days of the date of service.
+Pre-authorization is strictly required for medical evacuation, MRI/CT scans, and non-emergency inpatient admissions.
+Reimbursement is processed in the policyholder's chosen currency within 7 business days.

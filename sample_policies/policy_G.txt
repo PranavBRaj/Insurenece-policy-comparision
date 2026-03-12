@@ -1,0 +1,120 @@
+policy_G
+HEALTH INSURANCE POLICY DOCUMENT
+Policy Name: CoreGuard Catastrophic Health Plan
+Policy Number: CGC-2026-006
+Effective Date: November 1, 2026
+Insurer: CoreGuard Assurance
+
+---
+
+SECTION 1: COVERAGE BENEFITS
+
+1.1 Hospitalization
+Covers inpatient hospital stays including room and board, nursing services,
+and general nursing care up to $2,000,000 per policy year.
+Sub-limit: ICU/Critical Care covered up to $500,000 per year.
+
+1.2 Outpatient Medical Services
+Not covered until the annual deductible is met.
+Coverage limit post-deductible: Up to 3 outpatient visits per year at $40 per visit.
+
+1.3 Emergency Services
+Covers emergency room visits and ambulance services for life-threatening events.
+Emergency room: $1,000 copay after deductible is met.
+Ambulance: Fully covered (100%) after deductible is met.
+
+1.4 Surgical Procedures
+Covers medically necessary emergency and inpatient surgeries.
+Coverage up to $250,000 per surgical event after deductible is met.
+
+1.5 Prescription Drugs
+Covers generic and branded drugs listed in the approved formulary.
+Annual drug benefit limit: $10,000.
+Generic drugs: 100% reimbursement after deductible.
+Branded drugs: 80% reimbursement after deductible.
+
+1.6 Mental Health Services
+Covers acute inpatient mental health treatment only.
+Inpatient mental health: up to 14 days per year.
+Outpatient therapy sessions: Not covered.
+
+1.7 Maternity and Newborn Care
+Maternity coverage is strictly limited to life-threatening complications of pregnancy.
+Routine prenatal visits, normal delivery, and elective Caesarean sections: Not covered.
+Newborn emergency care up to 7 days post-birth.
+
+1.8 Preventive Care
+Annual wellness check-up: 1 per year, fully covered (100%) regardless of deductible.
+Vaccinations as recommended by WHO schedule: fully covered.
+Cancer screening (mammogram, Pap smear, PSA test): covered once per year.
+
+1.9 Dental Care
+Not included. Dental riders are not available for this plan.
+
+1.10 Vision Care
+Not included. Vision riders are not available for this plan.
+
+---
+
+SECTION 2: EXCLUSIONS AND EXCEPTIONS
+
+2.1 Pre-existing Conditions
+Any illness or condition diagnosed or treated within 36 months before the
+policy start date is not covered during the first 24 months.
+
+2.2 Cosmetic Procedures
+Any surgery or treatment primarily for aesthetic purposes is strictly excluded.
+
+2.3 Experimental Treatments
+Treatments not approved by the relevant health authority or classified as
+investigational or experimental are not covered.
+
+2.4 Self-inflicted Injuries
+Injuries or conditions resulting from intentional self-harm, attempted
+suicide, or participation in self-destructive activities are excluded.
+
+2.5 Substance Abuse
+Treatment for alcohol or drug dependency, including rehabilitation, is completely excluded.
+
+2.6 War and Civil Unrest
+Injuries or illnesses arising directly from war, invasion, or civil
+disturbance are excluded from all coverage.
+
+2.7 Fertility Treatments
+In vitro fertilization (IVF), artificial insemination, and diagnostics are not covered.
+
+2.8 Alternative Medicine
+Homeopathy, acupuncture, naturopathy, chiropractic care, and other alternative
+medicine treatments are excluded.
+
+---
+
+SECTION 3: PREMIUMS AND COSTS
+
+Annual Premium: $900.00
+Monthly Premium: $75.00
+Deductible: $9,500.00 per year
+Co-payment: $40.00 per outpatient visit (post-deductible)
+Co-insurance: 20% after deductible is met
+Out-of-Pocket Maximum: $12,000.00 per year
+
+Additional Fees:
+
+* Policy administration fee: $20.00 per year
+
+---
+
+SECTION 4: NETWORK
+
+This policy is an Exclusive Provider Organization (EPO) plan.
+This policy provides benefits ONLY when using in-network providers.
+Out-of-network services are entirely excluded (0% reimbursement) except for true,
+life-threatening medical emergencies admitted through an ER.
+
+---
+
+SECTION 5: CLAIMS
+
+Claims must be submitted within 90 days of the date of service.
+Pre-authorization is strictly required for any hospital admission.
+Reimbursement is processed within 15 business days of claim approval.

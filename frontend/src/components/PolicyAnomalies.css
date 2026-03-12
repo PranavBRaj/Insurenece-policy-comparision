@@ -1,0 +1,424 @@
+/* PolicyAnomalies.css */
+
+/* ── Card wrapper ────────────────────────────────────────── */
+.anm-card {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 28px;
+  border: 1px solid var(--clr-border);
+  background: linear-gradient(160deg, var(--clr-surface) 0%, #0a0a00 100%);
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+.anm-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.anm-header-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 8px rgba(239,68,68,.4));
+}
+
+.anm-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: var(--clr-txt);
+  margin-bottom: 3px;
+}
+
+.anm-subtitle {
+  font-size: .82rem;
+  color: var(--clr-txt-muted);
+  line-height: 1.5;
+}
+
+.anm-run-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ── Pre-scan placeholder ────────────────────────────────── */
+.anm-pre-scan {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 24px;
+  background: #0d0d00;
+  border: 1px dashed var(--clr-border-dk);
+  border-radius: var(--radius-md);
+  color: var(--clr-txt-muted);
+  font-size: .9rem;
+  line-height: 1.6;
+}
+
+.anm-pre-scan-icon {
+  font-size: 2.4rem;
+  flex-shrink: 0;
+}
+
+/* ── Summary ─────────────────────────────────────────────── */
+.anm-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.anm-stat-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.anm-stat-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  min-width: 72px;
+  border: 1px solid;
+}
+
+.anm-stat-value {
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.anm-stat-label {
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  margin-top: 4px;
+}
+
+.anm-stat-critical {
+  background: rgba(239,68,68,.1);
+  border-color: rgba(239,68,68,.35);
+  color: #ef4444;
+}
+.anm-stat-warning {
+  background: rgba(249,115,22,.1);
+  border-color: rgba(249,115,22,.3);
+  color: #f97316;
+}
+.anm-stat-info {
+  background: rgba(245,197,24,.08);
+  border-color: rgba(245,197,24,.25);
+  color: var(--clr-primary);
+}
+.anm-stat-p1 {
+  background: rgba(245,197,24,.06);
+  border-color: var(--clr-border-dk);
+  color: var(--clr-txt-muted);
+}
+.anm-stat-p2 {
+  background: rgba(251,191,36,.06);
+  border-color: var(--clr-border-dk);
+  color: var(--clr-txt-muted);
+}
+
+/* ── Riskiest policy callout ─────────────────────────────── */
+.anm-riskiest {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: #1a0505;
+  border: 1px solid rgba(239,68,68,.3);
+  font-size: .88rem;
+  color: #fca5a5;
+}
+
+.anm-riskiest-equal {
+  background: #0f1000;
+  border-color: rgba(245,197,24,.3);
+  color: var(--clr-txt-muted);
+}
+
+.anm-riskiest-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* ── Filter tabs ─────────────────────────────────────────── */
+.anm-filter-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.anm-filter-tab {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: .8rem;
+  font-weight: 600;
+  border: 1.5px solid var(--clr-border-dk);
+  background: transparent;
+  color: var(--clr-txt-muted);
+  cursor: pointer;
+  transition: all .16s ease;
+}
+
+.anm-filter-tab:hover {
+  border-color: var(--clr-primary);
+  color: var(--clr-primary);
+  background: var(--clr-primary-lt);
+}
+
+.anm-filter-tab-active {
+  background: var(--clr-primary-lt);
+  border-color: var(--clr-primary);
+  color: var(--clr-primary);
+  box-shadow: inset 0 0 0 1px rgba(245,197,24,.2);
+}
+
+/* ── LLM Insights ────────────────────────────────────────── */
+.anm-insights {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px;
+  background: #0e1100;
+  border: 1px solid rgba(245,197,24,.2);
+  border-radius: var(--radius-md);
+}
+
+.anm-insights-label {
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--clr-primary);
+}
+
+.anm-insights-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.anm-insight-item {
+  font-size: .88rem;
+  color: var(--clr-txt-muted);
+  line-height: 1.6;
+  padding-left: 14px;
+  position: relative;
+}
+
+.anm-insight-item::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--clr-primary);
+  font-size: .75rem;
+  top: 2px;
+}
+
+/* ── Anomaly list ────────────────────────────────────────── */
+.anm-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Anomaly card ────────────────────────────────────────── */
+.anm-anomaly-card {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--clr-border);
+  transition: border-color .18s;
+}
+
+.anm-anomaly-critical {
+  border-left: 4px solid #ef4444;
+}
+.anm-anomaly-warning {
+  border-left: 4px solid #f97316;
+}
+.anm-anomaly-info {
+  border-left: 4px solid var(--clr-primary);
+}
+
+.anm-anomaly-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  background: #0d0d0d;
+  cursor: pointer;
+  user-select: none;
+  transition: background .15s;
+}
+
+.anm-anomaly-header:hover {
+  background: #111100;
+}
+
+.anm-anomaly-sev-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.anm-anomaly-header-mid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.anm-anomaly-title {
+  font-size: .92rem;
+  font-weight: 700;
+  color: var(--clr-txt);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.anm-anomaly-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.anm-chevron {
+  font-size: .6rem;
+  color: var(--clr-txt-light);
+  flex-shrink: 0;
+}
+
+/* ── Chips ───────────────────────────────────────────────── */
+.anm-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  border: 1px solid;
+}
+
+.anm-sev-critical { background: rgba(239,68,68,.12);  border-color: rgba(239,68,68,.4);  color: #ef4444; }
+.anm-sev-warning  { background: rgba(249,115,22,.12); border-color: rgba(249,115,22,.4); color: #f97316; }
+.anm-sev-info     { background: rgba(245,197,24,.08); border-color: rgba(245,197,24,.3); color: var(--clr-primary); }
+
+.anm-pol-p1      { background: rgba(245,197,24,.06); border-color: rgba(245,197,24,.25); color: var(--clr-primary); }
+.anm-pol-p2      { background: rgba(251,191,36,.06); border-color: rgba(251,191,36,.25); color: #fbbf24; }
+.anm-pol-both    { background: rgba(34,197,94,.06);  border-color: rgba(34,197,94,.25);  color: #22c55e; }
+.anm-pol-general { background: rgba(156,163,175,.06); border-color: rgba(156,163,175,.2); color: #9ca3af; }
+
+.anm-chip-cat { background: rgba(255,255,255,.03); border-color: var(--clr-border-dk); color: var(--clr-txt-muted); }
+
+.anm-by-rule { background: rgba(99,102,241,.08); border-color: rgba(99,102,241,.3); color: #818cf8; }
+.anm-by-llm  { background: rgba(168,85,247,.08); border-color: rgba(168,85,247,.3); color: #c084fc; }
+
+/* ── Anomaly body ────────────────────────────────────────── */
+.anm-anomaly-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 16px 16px;
+  border-top: 1px solid var(--clr-border);
+  background: #080800;
+}
+
+.anm-anomaly-desc {
+  font-size: .87rem;
+  color: var(--clr-txt-muted);
+  line-height: 1.65;
+}
+
+.anm-anomaly-evidence {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.anm-evidence-label {
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--clr-txt-light);
+  white-space: nowrap;
+}
+
+.anm-evidence-value {
+  font-size: .82rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: #fde047;
+  background: rgba(245,197,24,.07);
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(245,197,24,.2);
+  word-break: break-all;
+}
+
+.anm-anomaly-suggestion {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #0e1000;
+  border: 1px solid rgba(34,197,94,.2);
+  border-radius: var(--radius-sm);
+  font-size: .85rem;
+  color: #4ade80;
+  line-height: 1.5;
+}
+
+.anm-suggestion-icon {
+  flex-shrink: 0;
+}
+
+/* ── Empty state ─────────────────────────────────────────── */
+.anm-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 40px 20px;
+  color: var(--clr-txt-muted);
+  font-size: .9rem;
+}
+
+.anm-empty-icon {
+  font-size: 2rem;
+}
+
+/* ── Footer timestamp ────────────────────────────────────── */
+.anm-generated-at {
+  font-size: .75rem;
+  color: var(--clr-txt-light);
+  text-align: right;
+}
+
+/* ── Spinner ─────────────────────────────────────────────── */
+.btn-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(10,10,10,.3);
+  border-top-color: #0a0a0a;
+  border-radius: 50%;
+  animation: anm-spin .7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes anm-spin {
+  to { transform: rotate(360deg); }
+}

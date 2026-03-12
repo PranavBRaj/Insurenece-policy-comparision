@@ -1,0 +1,59 @@
+/* ComparisonPage.css */
+
+.comparison-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ── Breadcrumb ──────────────────────────────────────── */
+.cp-breadcrumb {
+  font-size: .85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--clr-txt-muted);
+}
+
+.cp-breadcrumb a {
+  color: var(--clr-primary);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity .15s;
+}
+.cp-breadcrumb a:hover { opacity: .8; text-decoration: none; }
+
+.cp-sep {
+  color: var(--clr-border-dk);
+  font-weight: 300;
+}
+
+/* ── Meta row ────────────────────────────────────────── */
+.cp-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cp-date {
+  font-size: .83rem;
+  color: var(--clr-txt-muted);
+  font-weight: 500;
+}
+
+/* ── PDF download button ────────────────────────────── */
+.cp-pdf-btn {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cp-pdf-error {
+  margin-top: 6px;
+  padding: 8px 14px;
+  font-size: .82rem;
+}

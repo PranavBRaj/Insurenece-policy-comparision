@@ -1,0 +1,74 @@
+.pc-wrap {
+  margin-top: 2.5rem;
+}
+
+.pc-heading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #a78bfa;
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.01em;
+}
+
+/* ── Grid layout ── */
+.pc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.pc-card {
+  background: var(--clr-surface, #141414);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  border-radius: 10px;
+  padding: 1.25rem 1.25rem 1rem;
+}
+
+.pc-wide {
+  grid-column: span 1; /* each takes one column in the 2-col grid */
+}
+
+.pc-full {
+  grid-column: 1 / -1; /* full width */
+}
+
+.pc-card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #818cf8;
+  margin: 0 0 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pc-chart-box {
+  position: relative;
+  height: 260px;
+}
+
+.pc-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6b7280;
+  font-size: 0.88rem;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.pc-donut-box {
+  height: 280px;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 680px) {
+  .pc-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pc-wide,
+  .pc-full {
+    grid-column: span 1;
+  }
+}

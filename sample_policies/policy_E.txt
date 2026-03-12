@@ -1,0 +1,119 @@
+policy_E
+HEALTH INSURANCE POLICY DOCUMENT
+Policy Name: ValueCare Essential Health Plan
+Policy Number: VCE-2026-004
+Effective Date: January 1, 2026
+Insurer: ValueCare Mutual
+
+---
+
+SECTION 1: COVERAGE BENEFITS
+
+1.1 Hospitalization
+Covers inpatient hospital stays including room and board, nursing services,
+and general nursing care up to $50,000 per policy year.
+Sub-limit: ICU/Critical Care covered up to $15,000 per year.
+
+1.2 Outpatient Medical Services
+Covers consultations with general practitioners only. Specialist visits require referrals.
+Coverage limit: Up to 5 outpatient visits per year at $50 per visit.
+
+1.3 Emergency Services
+Covers emergency room visits for life-threatening conditions only.
+Emergency room: $1,500 per incident.
+Ambulance: Not covered under this plan.
+
+1.4 Surgical Procedures
+Covers emergency surgeries and strictly medically necessary procedures.
+Coverage up to $25,000 per surgical event.
+
+1.5 Prescription Drugs
+Covers generic drugs only, as listed in the basic formulary.
+Annual drug benefit limit: $500.
+Generic drugs: 50% reimbursement.
+Branded drugs: Not covered.
+
+1.6 Mental Health Services
+Covers emergency psychiatric evaluation only.
+Inpatient mental health: up to 5 days per lifetime.
+Outpatient therapy sessions: Not covered.
+
+1.7 Maternity and Newborn Care
+Maternity coverage is limited to complications of pregnancy.
+Routine prenatal visits and normal delivery: Not covered.
+Newborn care: Covered for the first 48 hours post-birth.
+
+1.8 Preventive Care
+Annual wellness check-up: 1 per year, covered at 50%.
+Vaccinations as recommended by WHO schedule: covered at 50%.
+Cancer screening: Not covered under this basic plan.
+
+1.9 Dental Care
+Not included. Dental riders are not available for this plan tier.
+
+1.10 Vision Care
+Not included. Vision riders are not available for this plan tier.
+
+---
+
+SECTION 2: EXCLUSIONS AND EXCEPTIONS
+
+2.1 Pre-existing Conditions
+Any illness or condition diagnosed, treated, or showing symptoms within 24 months
+before the policy start date is permanently excluded from coverage.
+
+2.2 Cosmetic Procedures
+Strictly excluded, including all reconstructive surgeries regardless of cause.
+
+2.3 Experimental Treatments
+Strictly excluded.
+
+2.4 Self-inflicted Injuries
+All injuries or conditions resulting from intentional self-harm are strictly excluded.
+
+2.5 Substance Abuse
+Treatment for alcohol or drug dependency is not covered.
+
+2.6 War and Civil Unrest
+Excluded from all coverage.
+
+2.7 Fertility Treatments
+Excluded from all coverage.
+
+2.8 Alternative Medicine
+All forms of alternative, complementary, and holistic medicine are excluded.
+
+2.9 Sports and Extreme Activities
+Injuries sustained during organized sports, extreme sports, or hazardous activities
+(e.g., rock climbing, scuba diving) are excluded.
+
+---
+
+SECTION 3: PREMIUMS AND COSTS
+
+Annual Premium: $600.00
+Monthly Premium: $50.00
+Deductible: $5,000.00 per year
+Co-payment: $50.00 per general practitioner visit
+Co-insurance: 50% after deductible is met
+Out-of-Pocket Maximum: $15,000.00 per year
+
+Additional Fees:
+
+* Policy administration fee: $100.00 per year
+
+---
+
+SECTION 4: NETWORK
+
+This policy is a strict Health Maintenance Organization (HMO) plan.
+Services must be rendered by in-network providers.
+Out-of-network services are not covered (0% reimbursement) except for true medical emergencies.
+
+---
+
+SECTION 5: CLAIMS
+
+Claims must be submitted within 30 days of the date of service.
+Pre-authorization is strictly required for any service exceeding $500.
+Reimbursement is processed within 45 business days of claim approval.

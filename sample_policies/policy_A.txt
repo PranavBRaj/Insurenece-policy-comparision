@@ -1,0 +1,126 @@
+HEALTH INSURANCE POLICY DOCUMENT
+Policy Name: BlueShield Premier Health Plan
+Policy Number: BSP-2024-001
+Effective Date: January 1, 2024
+Insurer: BlueShield Insurance Co.
+
+---
+
+SECTION 1: COVERAGE BENEFITS
+
+1.1 Hospitalization
+Covers inpatient hospital stays including room and board, nursing services,
+and general nursing care up to $500,000 per policy year.
+Sub-limit: ICU/Critical Care covered up to $200,000 per year.
+
+1.2 Outpatient Medical Services
+Covers consultations with general practitioners and specialist doctors.
+Coverage limit: Up to 30 outpatient visits per year at $150 per visit.
+
+1.3 Emergency Services
+Covers emergency room visits and ambulance services.
+Emergency room: $5,000 per incident.
+Ambulance: $1,000 per incident.
+
+1.4 Surgical Procedures
+Covers medically necessary surgeries including pre-operative and post-operative care.
+Coverage up to $150,000 per surgical event.
+
+1.5 Prescription Drugs
+Covers generic and branded drugs listed in the approved formulary.
+Annual drug benefit limit: $5,000.
+Generic drugs: 90% reimbursement.
+Branded drugs: 70% reimbursement.
+
+1.6 Mental Health Services
+Covers inpatient and outpatient mental health treatment.
+Up to 20 outpatient therapy sessions per year.
+Inpatient mental health: up to 30 days per year.
+
+1.7 Maternity and Newborn Care
+Covers prenatal visits, delivery, and postnatal care.
+Normal delivery: $8,000.
+Caesarean section: $12,000.
+Newborn care up to 30 days post-birth.
+
+1.8 Preventive Care
+Annual wellness check-up: 1 per year, fully covered (100%).
+Vaccinations as recommended by WHO schedule: fully covered.
+Cancer screening (mammogram, Pap smear, PSA test): covered once per year.
+
+1.9 Dental Care (Rider)
+Basic dental: fillings, extractions, scaling.
+Annual dental limit: $1,000.
+Orthodontics not covered under this plan.
+
+1.10 Vision Care (Rider)
+Annual eye examination: covered once per year.
+Corrective lenses or frames: $300 per year.
+
+---
+
+SECTION 2: EXCLUSIONS
+
+2.1 Pre-existing Conditions
+Any illness or condition diagnosed or treated within 12 months before the
+policy start date is not covered during the first 24 months.
+
+2.2 Cosmetic Procedures
+Any surgery or treatment primarily for aesthetic purposes is excluded,
+including rhinoplasty, liposuction, and non-reconstructive breast surgery.
+
+2.3 Experimental Treatments
+Treatments not approved by the relevant health authority or classified as
+investigational or experimental are not covered.
+
+2.4 Self-inflicted Injuries
+Injuries or conditions resulting from intentional self-harm, attempted
+suicide, or participation in self-destructive activities are excluded.
+
+2.5 Substance Abuse
+Treatment for alcohol or drug dependency is not covered unless admitted
+through our network rehabilitation program under special approval.
+
+2.6 War and Civil Unrest
+Injuries or illnesses arising directly from war, invasion, or civil
+disturbance are excluded from all coverage.
+
+2.7 Fertility Treatments
+In vitro fertilization (IVF), artificial insemination, and other assisted
+reproductive technologies are not covered.
+
+2.8 Alternative Medicine
+Homeopathy, acupuncture, naturopathy, and other alternative medicine
+treatments are excluded unless prescribed by a licensed physician.
+
+---
+
+SECTION 3: PREMIUMS AND COSTS
+
+Annual Premium: $2,400.00
+Monthly Premium: $200.00
+Deductible: $500.00 per year
+Co-payment: $25.00 per outpatient visit
+Co-insurance: 20% after deductible is met
+Out-of-Pocket Maximum: $4,000.00 per year
+
+Additional Fees:
+- Policy administration fee: $50.00 per year
+- Dental rider premium: $15.00 per month
+- Vision rider premium: $10.00 per month
+
+---
+
+SECTION 4: NETWORK
+
+This policy provides full benefits when using in-network providers.
+Out-of-network services are reimbursed at 60% of the approved amount.
+Emergency services are covered at in-network rates regardless of provider.
+
+---
+
+SECTION 5: CLAIMS
+
+Claims must be submitted within 90 days of the date of service.
+Pre-authorization is required for all elective surgeries and specialist referrals.
+Reimbursement is processed within 15 business days of claim approval.
