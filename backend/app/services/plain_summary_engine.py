@@ -11,11 +11,9 @@ import json
 import logging
 import re
 from datetime import datetime, timezone
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
-from groq import Groq
-
-from app.config import settings
+from app.services.llm_client import llm_chat_completion, resolve_llm_provider
 
 logger = logging.getLogger(__name__)
 
@@ -249,6 +247,7 @@ def generate_plain_summary(
     comparison_result: dict,
     policy1_name: str,
     policy2_name: str,
+    llm_provider: Optional[str] = None,
 ) -> dict:
     """Generate a plain-English consumer summary of a policy comparison result.
 
@@ -259,27 +258,26 @@ def generate_plain_summary(
     """
     compact = _compact_for_summary(comparison_result)
     prompt = _build_prompt(compact, policy1_name, policy2_name)
+    selected_provider = resolve_llm_provider(llm_provider)
 
     logger.info(
-        "Generating plain summary for '%s' vs '%s'",
+        "Generating plain summary via %s for '%s' vs '%s'",
+        selected_provider,
         policy1_name,
         policy2_name,
     )
 
-    client = Groq(api_key=settings.GROQ_API_KEY)
-
     try:
-        response = client.chat.completions.create(
-            model=settings.GROQ_MODEL,
+        raw = llm_chat_completion(
             messages=[{"role": "user", "content": prompt}],
+            provider=selected_provider,
             temperature=0.3,
-            response_format={"type": "json_object"},
+            json_mode=True,
             max_tokens=3000,
         )
     except Exception as exc:
-        raise ValueError(f"Groq API request failed: {exc}") from exc
+        raise ValueError(f"LLM API request failed: {exc}") from exc
 
-    raw: str = response.choices[0].message.content or ""
     cleaned = raw.strip()
     if cleaned.startswith("```"):
         inner = [line for line in cleaned.splitlines() if not line.startswith("```")]
@@ -288,7 +286,7 @@ def generate_plain_summary(
     try:
         payload: Dict[str, Any] = json.loads(cleaned)
     except json.JSONDecodeError as exc:
-        raise ValueError(f"Groq returned invalid JSON: {exc}") from exc
+        raise ValueError(f"LLM returned invalid JSON: {exc}") from exc
 
     p1: dict = payload.get("policy1_summary", {})
     p2: dict = payload.get("policy2_summary", {})

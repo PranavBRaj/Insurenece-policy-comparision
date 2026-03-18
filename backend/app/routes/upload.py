@@ -13,7 +13,7 @@ import uuid
 from typing import List, Optional
 
 import aiofiles
-from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile, status
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile, status
 from sqlalchemy.orm import Session
 
 from app.config import settings
@@ -87,12 +87,12 @@ def _save_policy_to_db(db: Session, file: UploadFile, file_path: str, file_size:
     return policy
 
 
-def _parse_and_update(db: Session, policy: Policy) -> None:
+def _parse_and_update(db: Session, policy: Policy, llm_provider: Optional[str] = None) -> None:
     """Parse the PDF and update the DB row; does NOT commit."""
     policy.parse_status = ParseStatus.PROCESSING
     db.flush()
     try:
-        parsed = parse_policy(policy.file_path)
+        parsed = parse_policy(policy.file_path, llm_provider=llm_provider)
         policy.extracted_text = parsed.raw_text[:16_000_000]  # guard LONGTEXT limit
         policy.parsed_data = {
             "coverage_items": [
@@ -196,6 +196,7 @@ async def upload_and_compare(
     request: Request,
     policy1: UploadFile = File(..., description="First insurance policy PDF"),
     policy2: UploadFile = File(..., description="Second insurance policy PDF"),
+    llm_provider: Optional[str] = Form(default=None, description="LLM provider override: groq | ollama"),
     db: Session = Depends(get_db),
 ):
     _validate_upload(policy1)
@@ -236,12 +237,12 @@ async def upload_and_compare(
     # --- Parse both policies ---
     parse_errors = []
     try:
-        _parse_and_update(db, p1_row)
+        _parse_and_update(db, p1_row, llm_provider=llm_provider)
     except Exception as exc:
         parse_errors.append(f"Policy 1 parse error: {exc}")
 
     try:
-        _parse_and_update(db, p2_row)
+        _parse_and_update(db, p2_row, llm_provider=llm_provider)
     except Exception as exc:
         parse_errors.append(f"Policy 2 parse error: {exc}")
 
@@ -271,7 +272,11 @@ async def upload_and_compare(
     db.flush()
 
     try:
-        result = compare_policies(_rebuild_parsed_policy(p1_row), _rebuild_parsed_policy(p2_row))
+        result = compare_policies(
+            _rebuild_parsed_policy(p1_row),
+            _rebuild_parsed_policy(p2_row),
+            llm_provider=llm_provider,
+        )
         cmp_row.comparison_result = result
         cmp_row.status = ComparisonStatus.COMPLETED
     except Exception as exc:

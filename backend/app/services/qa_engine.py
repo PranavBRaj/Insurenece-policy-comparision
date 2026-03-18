@@ -10,11 +10,9 @@ from __future__ import annotations
 
 import json
 import logging
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
-from groq import Groq
-
-from app.config import settings
+from app.services.llm_client import llm_chat_completion, resolve_llm_provider
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +47,11 @@ Rules:
 # ---------------------------------------------------------------------------
 
 
-def answer_question(comparison_result: Dict[str, Any], question: str) -> Dict[str, Any]:
+def answer_question(
+    comparison_result: Dict[str, Any],
+    question: str,
+    llm_provider: Optional[str] = None,
+) -> Dict[str, Any]:
     """Answer a natural language question about a comparison result.
 
     Sends the comparison_result JSON and the user's question to the Groq LLM
@@ -57,28 +59,29 @@ def answer_question(comparison_result: Dict[str, Any], question: str) -> Dict[st
     ``relevant_sections``.  Falls back to returning the raw response text with
     ``confidence="low"`` if the model output cannot be parsed as JSON.
     """
-    client = Groq(api_key=settings.GROQ_API_KEY)
+    selected_provider = resolve_llm_provider(llm_provider)
 
     user_message = (
         f"Comparison data:\n{json.dumps(comparison_result, indent=2)}\n\n"
         f"Question: {question}"
     )
 
-    logger.info("Sending QA request to Groq for question: %.80s", question)
+    logger.info("Sending QA request to %s for question: %.80s", selected_provider, question)
 
     try:
-        chat_response = client.chat.completions.create(
-            model=settings.GROQ_MODEL,
+        raw_text = llm_chat_completion(
             messages=[
                 {"role": "system", "content": _QA_SYSTEM_PROMPT},
                 {"role": "user", "content": user_message},
             ],
+            provider=selected_provider,
             temperature=0.2,
+            json_mode=True,
+            max_tokens=1200,
         )
     except Exception as exc:
-        raise ValueError(f"Groq API request failed: {exc}") from exc
+        raise ValueError(f"LLM API request failed: {exc}") from exc
 
-    raw_text: str = chat_response.choices[0].message.content or ""
     logger.debug("Raw QA response: %.200s", raw_text)
 
     cleaned = raw_text.strip()

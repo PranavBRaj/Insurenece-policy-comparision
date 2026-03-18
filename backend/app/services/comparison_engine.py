@@ -13,11 +13,9 @@ from __future__ import annotations
 
 import json
 import logging
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
-from groq import Groq
-
-from app.config import settings
+from app.services.llm_client import llm_chat_completion, resolve_llm_provider
 from app.services.text_parser import ParsedPolicy
 
 logger = logging.getLogger(__name__)
@@ -187,15 +185,16 @@ def _recalculate_summary(result: dict) -> None:
 # Public API
 # ---------------------------------------------------------------------------
 
-def compare_policies(policy1: ParsedPolicy, policy2: ParsedPolicy) -> Dict[str, Any]:
+def compare_policies(
+  policy1: ParsedPolicy,
+  policy2: ParsedPolicy,
+  llm_provider: Optional[str] = None,
+) -> Dict[str, Any]:
     """
-    Compare two ParsedPolicy objects using Groq and return a JSON-serialisable
+    Compare two ParsedPolicy objects using the selected LLM provider and return a JSON-serialisable
     dict matching the frontend's expected ComparisonResult schema.
     """
-    if not settings.GROQ_API_KEY:
-        raise ValueError("GROQ_API_KEY is not set. Add it to your .env file.")
-
-    client = Groq(api_key=settings.GROQ_API_KEY)
+    selected_provider = resolve_llm_provider(llm_provider)
 
     prompt = _COMPARISON_PROMPT.format(
         p1_name=policy1.filename,
@@ -205,23 +204,24 @@ def compare_policies(policy1: ParsedPolicy, policy2: ParsedPolicy) -> Dict[str, 
     )
 
     logger.info(
-        "Sending comparison to Groq: '%s' vs '%s'",
+      "Sending comparison to %s: '%s' vs '%s'",
+      selected_provider,
         policy1.filename, policy2.filename,
     )
 
     try:
-        response = client.chat.completions.create(
-            model=settings.GROQ_MODEL,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.0,
-            response_format={"type": "json_object"},
-            max_tokens=8192,
+      content = llm_chat_completion(
+        messages=[{"role": "user", "content": prompt}],
+        provider=selected_provider,
+        temperature=0.0,
+        json_mode=True,
+        max_tokens=8192,
         )
-        result: dict = json.loads(response.choices[0].message.content)
+      result: dict = json.loads(content)
     except json.JSONDecodeError as exc:
-        raise ValueError(f"Groq returned malformed JSON during comparison: {exc}") from exc
+      raise ValueError(f"LLM returned malformed JSON during comparison: {exc}") from exc
     except Exception as exc:
-        raise ValueError(f"Groq API error during comparison: {exc}") from exc
+      raise ValueError(f"LLM API error during comparison: {exc}") from exc
 
     result["policy1_filename"] = policy1.filename
     result["policy2_filename"] = policy2.filename

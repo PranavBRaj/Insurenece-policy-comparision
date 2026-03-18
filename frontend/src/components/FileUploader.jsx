@@ -94,17 +94,36 @@ export default function FileUploader({ onCompare, loading }) {
   const [file1, setFile1] = useState(null)
   const [file2, setFile2] = useState(null)
   const [progress, setProgress] = useState(0)
+  const [llmProvider, setLlmProvider] = useState(() => {
+    const saved = window.localStorage.getItem('pasta-llm-provider')
+    return saved === 'ollama' ? 'ollama' : 'groq'
+  })
 
   const canSubmit = file1 && file2 && !loading
 
   function handleSubmit(e) {
     e.preventDefault()
     if (!canSubmit) return
-    onCompare(file1, file2, setProgress)
+    window.localStorage.setItem('pasta-llm-provider', llmProvider)
+    onCompare(file1, file2, setProgress, llmProvider)
   }
 
   return (
     <form className="uploader-form" onSubmit={handleSubmit}>
+      <div className="provider-row">
+        <label htmlFor="llm-provider" className="provider-label">AI Provider</label>
+        <select
+          id="llm-provider"
+          className="provider-select"
+          value={llmProvider}
+          onChange={(e) => setLlmProvider(e.target.value)}
+          disabled={loading}
+        >
+          <option value="groq">Groq (cloud)</option>
+          <option value="ollama">Ollama (local)</option>
+        </select>
+      </div>
+
       <div className="drop-row">
         <div className="drop-col">
           <p className="policy-label policy1-label">Policy 1</p>

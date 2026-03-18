@@ -6,9 +6,9 @@ Endpoints for retrieving comparison results and upload history.
 from __future__ import annotations
 
 import logging
-from typing import List
+from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -180,6 +180,7 @@ def get_comparison(comparison_id: int, db: Session = Depends(get_db)):
 def ask_comparison_question(
     comparison_id: int,
     body: AskQuestionRequest,
+    llm_provider: Optional[str] = Query(default=None, description="LLM provider override: groq | ollama"),
     db: Session = Depends(get_db),
 ) -> AskQuestionResponse:
     """Answer a natural language question using the stored comparison result as context.
@@ -205,7 +206,7 @@ def ask_comparison_question(
         )
 
     try:
-        payload = answer_question(row.comparison_result, body.question)
+        payload = answer_question(row.comparison_result, body.question, llm_provider=llm_provider)
     except ValueError as exc:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -228,6 +229,7 @@ def ask_comparison_question(
 def recommend_policy(
     comparison_id: int,
     body: UserProfileInput,
+    llm_provider: Optional[str] = Query(default=None, description="LLM provider override: groq | ollama"),
     db: Session = Depends(get_db),
 ) -> RecommendationResponse:
     """Analyse a completed comparison and recommend the better-suited policy.
@@ -283,6 +285,7 @@ def recommend_policy(
             user_profile=body.model_dump(),
             policy1_name=p1_name,
             policy2_name=p2_name,
+            llm_provider=llm_provider,
         )
     except ValueError as exc:
         raise HTTPException(
@@ -310,6 +313,7 @@ def recommend_policy(
 )
 def get_comparison_anomalies(
     comparison_id: int,
+    llm_provider: Optional[str] = Query(default=None, description="LLM provider override: groq | ollama"),
     db: Session = Depends(get_db),
 ) -> AnomalyDetectionResponse:
     """Analyse a completed comparison result for unusual or missing policy characteristics.
@@ -358,6 +362,7 @@ def get_comparison_anomalies(
             comparison_result=result,
             policy1_name=p1_name,
             policy2_name=p2_name,
+            llm_provider=llm_provider,
         )
     except Exception as exc:
         raise HTTPException(
@@ -380,6 +385,7 @@ def get_comparison_anomalies(
 )
 def get_comparison_plain_summary(
     comparison_id: int,
+    llm_provider: Optional[str] = Query(default=None, description="LLM provider override: groq | ollama"),
     db: Session = Depends(get_db),
 ) -> PlainSummaryResponse:
     """Generate a jargon-free plain-English summary of a completed comparison.
@@ -431,7 +437,7 @@ def get_comparison_plain_summary(
     )
 
     try:
-        payload = generate_plain_summary(result, p1_name, p2_name)
+        payload = generate_plain_summary(result, p1_name, p2_name, llm_provider=llm_provider)
     except ValueError as exc:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

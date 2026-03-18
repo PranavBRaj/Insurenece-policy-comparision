@@ -13,36 +13,41 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Tooltip, Le
 const PRIMARY   = '#a78bfa'
 const POLICY1   = '#38bdf8'
 const POLICY2   = '#f472b6'
-const SURFACE   = '#1e1e1e'
-const TEXT      = '#f0efe0'
-const GRID      = 'rgba(240,239,224,0.08)'
 const ACCENT    = '#818cf8'
 
-function baseBarOpts(title, horizontal = false) {
+function getThemeTokens() {
+  const styles = getComputedStyle(document.documentElement)
+  return {
+    text: styles.getPropertyValue('--chart-text').trim() || styles.getPropertyValue('--clr-txt').trim() || '#f0efe0',
+    grid: styles.getPropertyValue('--chart-grid').trim() || 'rgba(240,239,224,0.08)',
+  }
+}
+
+function baseBarOpts(title, tokens, horizontal = false) {
   return {
     indexAxis: horizontal ? 'y' : 'x',
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { labels: { color: TEXT, font: { size: 12 } } },
-      title:  { display: !!title, text: title, color: TEXT, font: { size: 14, weight: 'bold' } },
-      tooltip: { backgroundColor: '#1e1b4b', titleColor: PRIMARY, bodyColor: TEXT },
+      legend: { labels: { color: tokens.text, font: { size: 12 } } },
+      title:  { display: !!title, text: title, color: tokens.text, font: { size: 14, weight: 'bold' } },
+      tooltip: { backgroundColor: '#1e1b4b', titleColor: PRIMARY, bodyColor: tokens.text },
     },
     scales: {
-      x: { ticks: { color: TEXT }, grid: { color: GRID } },
-      y: { ticks: { color: TEXT }, grid: { color: GRID } },
+      x: { ticks: { color: tokens.text }, grid: { color: tokens.grid } },
+      y: { ticks: { color: tokens.text }, grid: { color: tokens.grid } },
     },
   }
 }
 
-function baseDonutOpts(title) {
+function baseDonutOpts(title, tokens) {
   return {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'bottom', labels: { color: TEXT, font: { size: 11 }, padding: 12 } },
-      title:  { display: !!title, text: title, color: TEXT, font: { size: 14, weight: 'bold' } },
-      tooltip: { backgroundColor: '#1e1b4b', titleColor: PRIMARY, bodyColor: TEXT },
+      legend: { position: 'bottom', labels: { color: tokens.text, font: { size: 11 }, padding: 12 } },
+      title:  { display: !!title, text: title, color: tokens.text, font: { size: 14, weight: 'bold' } },
+      tooltip: { backgroundColor: '#1e1b4b', titleColor: PRIMARY, bodyColor: tokens.text },
     },
   }
 }
@@ -78,6 +83,8 @@ export default function PolicyCharts({ comparisonId }) {
   )
 
   if (!vis) return null
+
+  const themeTokens = getThemeTokens()
 
   const { policy1_name, policy2_name, coverage_bar, coverage_donut,
           exclusions_donut, premium_bar, similarity_histogram } = vis
@@ -117,12 +124,12 @@ export default function PolicyCharts({ comparisonId }) {
   }
 
   const premiumBarOpts = {
-    ...baseBarOpts(''),
+    ...baseBarOpts('', themeTokens),
     scales: {
-      x: { ticks: { color: TEXT }, grid: { color: GRID } },
+      x: { ticks: { color: themeTokens.text }, grid: { color: themeTokens.grid } },
       y: {
-        ticks: { color: TEXT },
-        grid: { color: GRID },
+        ticks: { color: themeTokens.text },
+        grid: { color: themeTokens.grid },
         suggestedMin: 0,
         suggestedMax: premiumMax > 0 ? premiumMax * 1.1 : 100,
       },
@@ -157,7 +164,7 @@ export default function PolicyCharts({ comparisonId }) {
         <div className="pc-card pc-wide">
           <h3 className="pc-card-title">Coverage Match by Section</h3>
           <div className="pc-chart-box">
-            <Bar data={coverageBarData} options={baseBarOpts('')} />
+            <Bar data={coverageBarData} options={baseBarOpts('', themeTokens)} />
           </div>
         </div>
 
@@ -175,14 +182,14 @@ export default function PolicyCharts({ comparisonId }) {
         <div className="pc-card">
           <h3 className="pc-card-title">Coverage Distribution</h3>
           <div className="pc-chart-box pc-donut-box">
-            <Doughnut data={coverageDonutData} options={baseDonutOpts('')} />
+            <Doughnut data={coverageDonutData} options={baseDonutOpts('', themeTokens)} />
           </div>
         </div>
 
         <div className="pc-card">
           <h3 className="pc-card-title">Exclusions Distribution</h3>
           <div className="pc-chart-box pc-donut-box">
-            <Doughnut data={exclusionsDonutData} options={baseDonutOpts('')} />
+            <Doughnut data={exclusionsDonutData} options={baseDonutOpts('', themeTokens)} />
           </div>
         </div>
 
@@ -192,11 +199,11 @@ export default function PolicyCharts({ comparisonId }) {
           <div className="pc-chart-box">
             {hasSimData ? (
               <Bar data={simHistData} options={{
-                ...baseBarOpts(''),
+                ...baseBarOpts('', themeTokens),
                 plugins: {
-                  ...baseBarOpts('').plugins,
+                  ...baseBarOpts('', themeTokens).plugins,
                   tooltip: {
-                    ...baseBarOpts('').plugins.tooltip,
+                    ...baseBarOpts('', themeTokens).plugins.tooltip,
                     callbacks: {
                       title: (items) => `Similarity range: ${items[0].label}`,
                       label: (item) => `${item.raw} section${item.raw !== 1 ? 's' : ''}`,
@@ -204,10 +211,10 @@ export default function PolicyCharts({ comparisonId }) {
                   },
                 },
                 scales: {
-                  x: { ticks: { color: TEXT }, grid: { color: GRID } },
+                  x: { ticks: { color: themeTokens.text }, grid: { color: themeTokens.grid } },
                   y: {
-                    ticks: { color: TEXT, precision: 0 },
-                    grid: { color: GRID },
+                    ticks: { color: themeTokens.text, precision: 0 },
+                    grid: { color: themeTokens.grid },
                     suggestedMin: 0,
                     suggestedMax: Math.max(...similarity_histogram.counts, 1) + 1,
                   },

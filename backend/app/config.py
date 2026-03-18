@@ -25,6 +25,14 @@ class Settings(BaseSettings):
     GROQ_API_KEY: str = ""
     GROQ_MODEL: str = "llama-3.3-70b-versatile"
 
+    # LLM provider selection
+    LLM_PROVIDER: str = "groq"  # "groq" | "ollama"
+
+    # Ollama
+    OLLAMA_BASE_URL: str = "http://localhost:11434"
+    OLLAMA_MODEL: str = "qwen2.5:14b"
+    OLLAMA_TIMEOUT_SECONDS: int = 180
+
     # Google Sheets integration
     GOOGLE_SERVICE_ACCOUNT_JSON: str = ""
     GOOGLE_SHEETS_SHARE_EMAIL: str = ""

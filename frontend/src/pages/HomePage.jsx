@@ -9,11 +9,11 @@ export default function HomePage() {
   const [error, setError]     = useState(null)
   const navigate = useNavigate()
 
-  async function handleCompare(file1, file2, setProgress) {
+  async function handleCompare(file1, file2, setProgress, llmProvider) {
     setError(null)
     setLoading(true)
     try {
-      const result = await uploadAndCompare(file1, file2, setProgress)
+      const result = await uploadAndCompare(file1, file2, setProgress, llmProvider)
       navigate(`/comparison/${result.comparison.id}`, { state: { result } })
     } catch (err) {
       setError(err.message)
@@ -26,14 +26,14 @@ export default function HomePage() {
     <div className="home-page">
       {/* Hero Section */}
       <div className="home-hero">
-        <div className="hero-badge">✨ AI-Powered Analysis</div>
+        <div className="hero-badge">✨ AI-Powered Policy Intelligence</div>
         <h1 className="hero-title">
-          Compare Insurance Policies<br />
-          <span className="text-gradient">Instantly & Intelligently</span>
+          Policy Analysis &amp; Summary<br />
+          <span className="text-gradient">Powered by AI</span>
         </h1>
         <p className="hero-subtitle">
-          Upload two policy documents and get a comprehensive side-by-side analysis
-          of coverage, exclusions, and pricing — in seconds.
+          Upload two policy documents and get a comprehensive side-by-side analysis,
+          anomaly detection, plain-English summaries, and AI-driven recommendations — in seconds.
         </p>
         <div className="hero-stats">
           <div className="hero-stat"><strong>3</strong><span>Sections Analyzed</span></div>

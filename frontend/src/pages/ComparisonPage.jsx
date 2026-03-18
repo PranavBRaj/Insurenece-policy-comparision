@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, useLocation, Link } from 'react-router-dom'
+import { useParams, useLocation, Link, Outlet, useOutletContext } from 'react-router-dom'
 import ComparisonView from '../components/ComparisonView.jsx'
 import PolicyAnomalies from '../components/PolicyAnomalies.jsx'
 import PolicyCharts from '../components/PolicyCharts.jsx'
@@ -13,21 +13,28 @@ export default function ComparisonPage() {
   const { id } = useParams()
   const location = useLocation()
 
-  // If navigated directly from upload we already have the result in state
-  const [data, setData]           = useState(location.state?.result?.comparison || null)
-  const [loading, setLoading]     = useState(!data)
+  const [data, setData]           = useState(null)
+  const [loading, setLoading]     = useState(true)
   const [error, setError]         = useState(null)
   const [pdfLoading, setPdfLoading] = useState(false)
   const [pdfError, setPdfError]   = useState(null)
 
   useEffect(() => {
-    if (data) return  // already loaded from navigation state
+    const routeData = location.state?.result?.comparison
+    if (routeData && String(routeData.id) === String(id)) {
+      setData(routeData)
+      setLoading(false)
+      setError(null)
+      return
+    }
+
     setLoading(true)
+    setError(null)
     getComparison(id)
       .then(setData)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
-  }, [id]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [id, location.state])
 
   async function handleDownloadPdf() {
     setPdfError(null)
@@ -89,16 +96,42 @@ export default function ComparisonPage() {
               </div>
             )}
           </div>
-          <ComparisonView data={data} />
-          <PolicyAnomalies comparisonId={id} />
-          <PolicyCharts comparisonId={id} />
-          <PolicyQA comparisonId={id} />
-          <PolicyRecommendation comparisonId={id} />
-          <PolicyPlainSummary comparisonId={id} />
+
+          <Outlet context={{ comparisonId: id, data }} />
         </>
       )}
     </div>
   )
+}
+
+export function ComparisonOverviewPage() {
+  const { data } = useOutletContext()
+  return <ComparisonView data={data} />
+}
+
+export function ComparisonAnomaliesPage() {
+  const { comparisonId } = useOutletContext()
+  return <PolicyAnomalies comparisonId={comparisonId} />
+}
+
+export function ComparisonVisualsPage() {
+  const { comparisonId } = useOutletContext()
+  return <PolicyCharts comparisonId={comparisonId} />
+}
+
+export function ComparisonQAPage() {
+  const { comparisonId } = useOutletContext()
+  return <PolicyQA comparisonId={comparisonId} />
+}
+
+export function ComparisonRecommendationPage() {
+  const { comparisonId } = useOutletContext()
+  return <PolicyRecommendation comparisonId={comparisonId} />
+}
+
+export function ComparisonSummaryPage() {
+  const { comparisonId } = useOutletContext()
+  return <PolicyPlainSummary comparisonId={comparisonId} />
 }
 
 function statusBadge(status) {

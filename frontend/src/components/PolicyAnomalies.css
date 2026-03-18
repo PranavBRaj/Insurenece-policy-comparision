@@ -57,6 +57,10 @@
   line-height: 1.6;
 }
 
+.anm-pre-scan strong {
+  color: var(--clr-primary);
+}
+
 .anm-pre-scan-icon {
   font-size: 2.4rem;
   flex-shrink: 0;
@@ -190,6 +194,7 @@
   background: #0e1100;
   border: 1px solid rgba(245,197,24,.2);
   border-radius: var(--radius-md);
+  color: var(--clr-txt);
 }
 
 .anm-insights-label {
@@ -260,6 +265,7 @@
   cursor: pointer;
   user-select: none;
   transition: background .15s;
+  color: var(--clr-txt);
 }
 
 .anm-anomaly-header:hover {
@@ -334,6 +340,7 @@
   padding: 14px 16px 16px;
   border-top: 1px solid var(--clr-border);
   background: #080800;
+  color: var(--clr-txt);
 }
 
 .anm-anomaly-desc {
@@ -406,6 +413,47 @@
   font-size: .75rem;
   color: var(--clr-txt-light);
   text-align: right;
+}
+
+:root[data-theme='light'] .anm-card {
+  background: linear-gradient(160deg, #fffef8 0%, #f5f0dc 100%);
+  border-color: #d8c887;
+}
+
+:root[data-theme='light'] .anm-pre-scan {
+  background: #fff9e8;
+  border-color: #d8c887;
+  color: #5e573f;
+}
+
+:root[data-theme='light'] .anm-insights {
+  background: #fffdf6;
+  border-color: #e6d9aa;
+}
+
+:root[data-theme='light'] .anm-insight-item {
+  color: var(--clr-txt);
+}
+
+:root[data-theme='light'] .anm-anomaly-card {
+  background: #fffef9;
+}
+
+:root[data-theme='light'] .anm-anomaly-header {
+  background: #fbf7ea;
+}
+
+:root[data-theme='light'] .anm-anomaly-header:hover {
+  background: #f4eed7;
+}
+
+:root[data-theme='light'] .anm-anomaly-body {
+  background: #fffef9;
+}
+
+:root[data-theme='light'] .anm-chip-cat {
+  background: #f4f1e5;
+  color: #5e573f;
 }
 
 /* ── Spinner ─────────────────────────────────────────────── */

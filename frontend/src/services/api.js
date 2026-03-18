@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+const LLM_PROVIDER_KEY = 'pasta-llm-provider'
+
 const api = axios.create({
   baseURL: '/api',
   timeout: 120_000, // 2 min – large PDFs can take time
@@ -18,16 +20,32 @@ api.interceptors.response.use(
   },
 )
 
+export function getSelectedLlmProvider() {
+  const value = window.localStorage.getItem(LLM_PROVIDER_KEY)
+  return value === 'ollama' ? 'ollama' : 'groq'
+}
+
+export function setSelectedLlmProvider(provider) {
+  const safe = provider === 'ollama' ? 'ollama' : 'groq'
+  window.localStorage.setItem(LLM_PROVIDER_KEY, safe)
+  return safe
+}
+
+function llmParams(extra = {}) {
+  return { ...extra, llm_provider: getSelectedLlmProvider() }
+}
+
 /**
  * Upload two PDF files and receive comparison results.
  * @param {File} file1
  * @param {File} file2
  * @param {(pct: number) => void} [onProgress]
  */
-export async function uploadAndCompare(file1, file2, onProgress) {
+export async function uploadAndCompare(file1, file2, onProgress, provider) {
   const form = new FormData()
   form.append('policy1', file1)
   form.append('policy2', file2)
+  form.append('llm_provider', provider || getSelectedLlmProvider())
 
   const res = await api.post('/upload-compare', form, {
     headers: { 'Content-Type': 'multipart/form-data' },
@@ -84,7 +102,11 @@ export async function getHistory(skip = 0, limit = 20) {
  * @returns {{ question: string, answer: string, confidence: string, relevant_sections: string[] }}
  */
 export async function askQuestion(comparisonId, question) {
-  const res = await api.post(`/comparisons/${comparisonId}/ask`, { question })
+  const res = await api.post(
+    `/comparisons/${comparisonId}/ask`,
+    { question },
+    { params: llmParams() },
+  )
   return res.data
 }
 
@@ -126,7 +148,9 @@ export async function getVisualisation(comparisonId) {
  * @param {object} profile  - UserProfileInput fields (all optional)
  */
 export async function getRecommendations(comparisonId, profile) {
-  const res = await api.post(`/comparisons/${comparisonId}/recommend`, profile)
+  const res = await api.post(`/comparisons/${comparisonId}/recommend`, profile, {
+    params: llmParams(),
+  })
   return res.data
 }
 
@@ -135,7 +159,9 @@ export async function getRecommendations(comparisonId, profile) {
  * @param {number} comparisonId
  */
 export async function getAnomalies(comparisonId) {
-  const res = await api.get(`/comparisons/${comparisonId}/anomalies`)
+  const res = await api.get(`/comparisons/${comparisonId}/anomalies`, {
+    params: llmParams(),
+  })
   return res.data
 }
 
@@ -144,7 +170,9 @@ export async function getAnomalies(comparisonId) {
  * @param {number} comparisonId
  */
 export async function getPlainSummary(comparisonId) {
-  const res = await api.get(`/comparisons/${comparisonId}/plain-summary`)
+  const res = await api.get(`/comparisons/${comparisonId}/plain-summary`, {
+    params: llmParams(),
+  })
   return res.data
 }
 

@@ -11,11 +11,9 @@ import json
 import logging
 from copy import deepcopy
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, Optional
 
-from groq import Groq
-
-from app.config import settings
+from app.services.llm_client import llm_chat_completion, resolve_llm_provider
 
 logger = logging.getLogger(__name__)
 
@@ -531,6 +529,7 @@ def detect_llm_anomalies(
     policy1_name: str,
     policy2_name: str,
     rule_anomalies: list[dict],
+    llm_provider: Optional[str] = None,
 ) -> tuple[list[dict], list[str]]:
     """Detect additional anomalies using the Groq LLM beyond rule-based checks.
 
@@ -573,23 +572,23 @@ def detect_llm_anomalies(
         "}"
     )
 
+    selected_provider = resolve_llm_provider(llm_provider)
+
     try:
-        client = Groq(api_key=settings.GROQ_API_KEY)
-        chat_response = client.chat.completions.create(
-            model=settings.GROQ_MODEL,
+        raw_text = llm_chat_completion(
             messages=[
                 {"role": "system", "content": _LLM_SYSTEM_PROMPT},
-                {"role": "user",   "content": prompt},
+                {"role": "user", "content": prompt},
             ],
+            provider=selected_provider,
             temperature=0.1,
-            response_format={"type": "json_object"},
+            json_mode=True,
             max_tokens=2500,
         )
     except Exception as exc:
-        logger.warning("Groq anomaly detection failed — falling back to rule results only: %s", exc)
+        logger.warning("%s anomaly detection failed — falling back to rule results only: %s", selected_provider, exc)
         return [], []
 
-    raw_text: str = chat_response.choices[0].message.content or ""
     logger.debug("Raw Groq anomaly response: %.300s", raw_text)
 
     try:
@@ -642,6 +641,7 @@ def run_anomaly_detection(
     comparison_result: dict,
     policy1_name: str,
     policy2_name: str,
+    llm_provider: Optional[str] = None,
 ) -> dict:
     """Orchestrate rule-based and LLM-based anomaly detection and return results.
 
@@ -652,7 +652,11 @@ def run_anomaly_detection(
     """
     rule_anomalies = detect_rule_based_anomalies(comparison_result, policy1_name, policy2_name)
     llm_anomalies, llm_insights = detect_llm_anomalies(
-        comparison_result, policy1_name, policy2_name, rule_anomalies
+        comparison_result,
+        policy1_name,
+        policy2_name,
+        rule_anomalies,
+        llm_provider=llm_provider,
     )
 
     all_anomalies = rule_anomalies + llm_anomalies

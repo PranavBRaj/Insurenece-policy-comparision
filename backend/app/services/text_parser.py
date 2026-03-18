@@ -15,9 +15,7 @@ import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
-from groq import Groq
-
-from app.config import settings
+from app.services.llm_client import llm_chat_completion, resolve_llm_provider
 
 logger = logging.getLogger(__name__)
 
@@ -109,13 +107,8 @@ _MAX_CHARS = 28_000   # ~7 000 tokens – well within llama-3.3-70b-versatile's 
 # Groq API call
 # ---------------------------------------------------------------------------
 
-def _extract_via_groq(raw_text: str) -> dict:
-    if not settings.GROQ_API_KEY:
-        raise ValueError(
-            "GROQ_API_KEY is not set. Add it to your .env file."
-        )
-
-    client = Groq(api_key=settings.GROQ_API_KEY)
+def _extract_via_llm(raw_text: str, llm_provider: Optional[str] = None) -> dict:
+    selected_provider = resolve_llm_provider(llm_provider)
 
     # Truncate very long documents to stay within token budget
     text = raw_text
@@ -126,17 +119,13 @@ def _extract_via_groq(raw_text: str) -> dict:
         )
         text = text[:_MAX_CHARS] + "\n\n[Document truncated for processing]"
 
-    response = client.chat.completions.create(
-        model=settings.GROQ_MODEL,
-        messages=[
-            {"role": "user", "content": _EXTRACTION_PROMPT + text}
-        ],
+    content = llm_chat_completion(
+        messages=[{"role": "user", "content": _EXTRACTION_PROMPT + text}],
+        provider=selected_provider,
         temperature=0.0,
-        response_format={"type": "json_object"},
+        json_mode=True,
         max_tokens=4096,
     )
-
-    content = response.choices[0].message.content
     return json.loads(content)
 
 
@@ -144,13 +133,14 @@ def _extract_via_groq(raw_text: str) -> dict:
 # Public API
 # ---------------------------------------------------------------------------
 
-def parse_policy(file_path: str) -> ParsedPolicy:
+def parse_policy(file_path: str, llm_provider: Optional[str] = None) -> ParsedPolicy:
     """
     Read a .txt policy file and return a ParsedPolicy populated by Groq.
     Raises ValueError on unrecoverable failures.
     """
     filename = os.path.basename(file_path)
-    logger.info("Parsing policy via Groq: %s", filename)
+    selected_provider = resolve_llm_provider(llm_provider)
+    logger.info("Parsing policy via %s: %s", selected_provider, filename)
 
     # Read the file
     try:
@@ -162,13 +152,13 @@ def parse_policy(file_path: str) -> ParsedPolicy:
     if not raw_text.strip():
         raise ValueError(f"The uploaded file '{filename}' is empty.")
 
-    # Extract structured data via Groq
+    # Extract structured data via selected LLM provider
     try:
-        data = _extract_via_groq(raw_text)
+        data = _extract_via_llm(raw_text, llm_provider=selected_provider)
     except json.JSONDecodeError as exc:
-        raise ValueError(f"Groq returned malformed JSON for '{filename}': {exc}") from exc
+        raise ValueError(f"LLM returned malformed JSON for '{filename}': {exc}") from exc
     except Exception as exc:
-        raise ValueError(f"Groq API error while parsing '{filename}': {exc}") from exc
+        raise ValueError(f"LLM API error while parsing '{filename}': {exc}") from exc
 
     # Build ParsedPolicy from Groq's response
     policy = ParsedPolicy(filename=filename, raw_text=raw_text)
@@ -209,7 +199,8 @@ def parse_policy(file_path: str) -> ParsedPolicy:
     )
 
     logger.info(
-        "Groq parsed '%s': %d coverage items, %d exclusions",
+        "%s parsed '%s': %d coverage items, %d exclusions",
+        selected_provider,
         filename, len(policy.coverage_items), len(policy.exclusion_items),
     )
     return policy

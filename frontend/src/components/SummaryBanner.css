@@ -6,6 +6,7 @@
   border: 1px solid #2a2000;
   overflow: hidden;
   position: relative;
+  color: var(--clr-txt);
 }
 
 .summary-banner::before {
@@ -25,6 +26,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  color: var(--clr-txt);
 }
 
 /* ── Stats row ─────────────────────────────────────── */
@@ -87,6 +89,7 @@
   border-radius: var(--radius-md);
   padding: 14px 16px;
   transition: box-shadow .2s;
+  color: var(--clr-txt);
 }
 .adv-box:hover { box-shadow: var(--shadow-sm); }
 .adv-blue   { background: #1a1400; border: 1px solid #3d3000; }
@@ -126,3 +129,40 @@
 }
 .adv-blue li::before   { color: var(--clr-policy1); }
 .adv-violet li::before { color: var(--clr-policy2); }
+
+:root[data-theme='light'] .summary-banner {
+  background: linear-gradient(160deg, #fffef8 0%, #f5f0dc 100%);
+  border-color: #d8c887;
+}
+
+:root[data-theme='light'] .stat-blue {
+  background: linear-gradient(135deg, #fff5d4, #f3e7b2);
+  color: #7a5a00;
+  border-color: #d8c171;
+}
+
+:root[data-theme='light'] .stat-violet {
+  background: linear-gradient(135deg, #fff3da, #f4e4b6);
+  color: #8a5a00;
+  border-color: #dec277;
+}
+
+:root[data-theme='light'] .stat-green {
+  background: linear-gradient(135deg, #edf9ef, #d9f0df);
+  color: #166534;
+  border-color: #9dd0a7;
+}
+
+:root[data-theme='light'] .adv-blue {
+  background: #fff9e8;
+  border-color: #d8c887;
+}
+
+:root[data-theme='light'] .adv-violet {
+  background: #fff9ef;
+  border-color: #e1ca96;
+}
+
+:root[data-theme='light'] .adv-list li {
+  color: var(--clr-txt);
+}

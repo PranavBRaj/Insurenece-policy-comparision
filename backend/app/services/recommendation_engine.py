@@ -11,11 +11,9 @@ import json
 import logging
 from copy import deepcopy
 from datetime import datetime, timezone
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
-from groq import Groq
-
-from app.config import settings
+from app.services.llm_client import llm_chat_completion, resolve_llm_provider
 
 logger = logging.getLogger(__name__)
 
@@ -213,6 +211,7 @@ def generate_recommendations(
     user_profile: dict,
     policy1_name: str,
     policy2_name: str,
+    llm_provider: Optional[str] = None,
 ) -> dict:
     """Generate LLM-powered policy recommendations for a user and standard profiles.
 
@@ -232,34 +231,33 @@ def generate_recommendations(
         user_profile.get("primary_concern"),
     )
 
+    selected_provider = resolve_llm_provider(llm_provider)
+
     compact_result = _compact_comparison(comparison_result)
     profile_for_prompt = {k: v for k, v in user_profile.items() if v is not None}
     prompt = _build_prompt(compact_result, profile_for_prompt, policy1_name, policy2_name)
 
-    client = Groq(api_key=settings.GROQ_API_KEY)
-
     try:
-        chat_response = client.chat.completions.create(
-            model=settings.GROQ_MODEL,
+        raw_text = llm_chat_completion(
             messages=[
                 {"role": "system", "content": _SYSTEM_PROMPT},
                 {"role": "user", "content": prompt},
             ],
+            provider=selected_provider,
             temperature=0.1,
-            response_format={"type": "json_object"},
+            json_mode=True,
             max_tokens=3000,
         )
     except Exception as exc:
-        raise ValueError(f"Groq API request failed: {exc}") from exc
+        raise ValueError(f"LLM API request failed: {exc}") from exc
 
-    raw_text: str = chat_response.choices[0].message.content or ""
-    logger.debug("Raw Groq recommendation response: %.300s", raw_text)
+    logger.debug("Raw %s recommendation response: %.300s", selected_provider, raw_text)
 
     try:
         payload: Dict[str, Any] = json.loads(raw_text)
     except json.JSONDecodeError as exc:
         raise ValueError(
-            f"Groq returned non-JSON recommendation response: {exc}"
+            f"LLM returned non-JSON recommendation response: {exc}"
         ) from exc
 
     primary: Dict[str, Any] = _sanitise_profile(
